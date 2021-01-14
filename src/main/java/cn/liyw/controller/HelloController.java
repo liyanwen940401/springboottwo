@@ -30,7 +30,11 @@ public class HelloController {
     @RequestMapping(method = RequestMethod.GET,value = "/selectUserById")
     public String selectUserById(ModelMap model){
         System.out.println("ok");
-        User user = userService.queryUserById(1L);
+//        User user = userService.queryUserById(1L);
+        User user = new User();
+        user.setAge(12);
+        user.setName("zhangsan");
+        user.setId(1L);
         model.put("user",user);
         return "demo";
     }
