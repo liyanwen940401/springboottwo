@@ -5,6 +5,7 @@ import cn.liyw.domin.User;
 import cn.liyw.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,9 +14,16 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int addUser(User user) {
-        return userDao.addUser(user);
+        int i = userDao.addUser(user);
+        if(i>=1) {
+            throw new RuntimeException("yichang");
+        }
+        return i;
     }
 
     @Override
