@@ -2,8 +2,10 @@ package cn.liyw.page;
 
 import cn.liyw.Application;
 import cn.liyw.dao.UserDao;
+import cn.liyw.domin.ActivityItemType;
 import cn.liyw.domin.User;
 import cn.liyw.domin.k_v;
+import net.minidev.json.JSONArray;
 import netscape.javascript.JSObject;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.json.JSONException;
@@ -78,15 +80,7 @@ public class PageTest {
     }
     @Test
     public void T_add() throws ParseException, JSONException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-
-        String sendGoldenTicketTime = sdf.format(calendar.getTime());
-        System.out.println("expireStartDate:"+sendGoldenTicketTime);
+        System.out.println(ActivityItemType.CURRENCY.name());
     }
 
 }

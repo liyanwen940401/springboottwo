@@ -1,48 +1,81 @@
 package cn.liyw.page;
 
 import cn.liyw.Application;
+import cn.liyw.service.RedisUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Objects;
+import javax.annotation.PostConstruct;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
 public class PageTest4 {
 
-    public String convert(String s, int numRows) {
-        if(s.length()<=numRows || numRows==1){
-            return s;
-        }
-        int num = s.length()%(2*numRows-2)==0?s.length()/(2*numRows-2):s.length()/(2*numRows-2)+1;
-        char[] chars = s.toCharArray();
-        char[] newChars = new char[chars.length];
-        int temp = 0;
-        for(int i=0;i<num;i++){
-            newChars[temp] = chars[i*(2*numRows-2)];
-            temp++;
-        }
-        for(int j=1;j<=numRows-2;j++) {
-            for (int i = 0; i < num && i * (2 * numRows - 2) + j<s.length(); i++) {
-                newChars[temp] = chars[i * (2 * numRows - 2) + j];
-                temp++;
-                if((i + 1) * (2 * numRows - 2) - j<s.length()) {
-                    newChars[temp] = chars[(i + 1) * (2 * numRows - 2) - j];
-                    temp++;
-                }
+
+
+    protected ThreadPoolExecutor executorService = new ThreadPoolExecutor(10, 10, 0L,
+            TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(10000));
+
+
+    @PostConstruct
+    public void init() {
+        try {
+
+            for (int i = 0; i < 2; i++) {
+                executorService.execute(new GiftRetryTask());
             }
+        } catch (Exception e) {
         }
-        for(int i=temp;i<s.length();i++){
-            newChars[i] = chars[(i-temp)*(2*numRows-2)+numRows-1];
-        }
-        return String.valueOf(newChars);
+
+
     }
+        /**
+         * 重试机制
+         *
+         * @author liujianqin
+         *
+         */
+        private  class GiftRetryTask implements Runnable {
+
+            @Override
+            public void run() {
+                while (true) {
+
+                    System.out.println("lpop.giftMsg====");
+                    String giftMsg = RedisUtils.lpop("retry.list");
+                    try {
+
+                        if(giftMsg == null){
+                            break;
+                        }
+                        System.out.println("lpop.giftMsg sleep start===="+Thread.currentThread().getName());
+                        Thread.sleep(10000);
+                        System.out.println("lpop.giftMsg sleep end===="+giftMsg);
+                    } catch (Throwable e) {
+
+                    }
+                }
+
+            }
+
+        }
+
+
+
 
     @Test
-    public void T_add(){
-        this.convert("ABCDE",4);
+    public void T_add() throws InterruptedException {
+//            for(int i = 0;i<100000;i++){
+//                RedisUtils.rpush("retry.list","apple"+i);
+//                System.out.println("put======"+i+Thread.currentThread().getName());
+//            }
+            Thread.sleep(60*1000*5);
+
     }
 
 }

@@ -45,4 +45,51 @@ public class RedisUtils {
         }
         return value;
     }
+    public static String set(String key, int indexdb,String value) {
+        Jedis jedis = null;
+        String ret = null;
+
+        try {
+            jedis = jedisPool.getResource();//获取一个jedis实例
+            jedis.select(indexdb);
+            ret = jedis.set(key,value);
+        } catch (Exception e) {
+            System.out.println("错误日志："+e.getMessage());
+        } finally {
+            jedis.close();
+        }
+        return ret;
+    }
+    public static String lpop(String key) {
+        String result = null;
+        Jedis jedis = jedisPool.getResource();
+        jedis.select(0);
+        if (null != jedis) {
+            try {
+                result = jedis.lpop(key);
+            } catch (Exception e) {
+            } finally {
+                if (jedis != null) {
+                    jedis.close();
+                }
+            }
+        }
+        return result;
+    }
+    public static long rpush(String key, String target) {
+        long result = -1;
+        Jedis jedis = jedisPool.getResource();
+        jedis.select(0);
+        if (null != jedis) {
+            try {
+                result = jedis.rpush(key, target);
+            } catch (Exception e) {
+            } finally {
+                if (jedis != null) {
+                    jedis.close();
+                }
+            }
+        }
+        return result;
+    }
 }

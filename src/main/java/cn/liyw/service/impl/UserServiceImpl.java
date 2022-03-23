@@ -20,9 +20,6 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public int addUser(User user) {
         int i = userDao.addUser(user);
-        if(i>=1) {
-            throw new RuntimeException("yichang");
-        }
         return i;
     }
 
