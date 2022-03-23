@@ -2,8 +2,6 @@ package cn.liyw.domin;
 
 /**
  * 道具类型
- * 
- * @author liujianqin
  *
  */
 public enum ActivityItemType {
