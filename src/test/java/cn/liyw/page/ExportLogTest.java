@@ -18,14 +18,6 @@ public class ExportLogTest {
             String encoding = "GBK";
             File file = new File("/Users/liyanwen/Desktop/13-15-02.log");
             HashSet<Integer> apptype = new HashSet<Integer>();
-            apptype.add(16);
-            apptype.add(20);
-            apptype.add(33);
-            apptype.add(34);
-            apptype.add(38);
-            apptype.add(42);
-            apptype.add(44);
-            apptype.add(45);
             String dstPath = "/Users/liyanwen/Desktop/lyw02.log";
             if (file.isFile() && file.exists()) { // 判断文件是否存在
                 InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式

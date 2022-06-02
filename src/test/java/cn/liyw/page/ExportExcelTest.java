@@ -40,9 +40,6 @@ public class ExportExcelTest {
                 while ((lineTxt = bufferedReader.readLine()) != null) {
 
                     String[] data = lineTxt.split(",");
-                    if(data[3].equals("4314757592")){
-                        continue;
-                    }
                     HSSFRow row = sheet.createRow(i);
                     HSSFCell cell = row.createCell(0);
                     cell.setCellValue(data[1]);

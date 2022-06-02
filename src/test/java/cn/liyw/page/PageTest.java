@@ -80,7 +80,10 @@ public class PageTest {
     }
     @Test
     public void T_add() throws ParseException, JSONException {
-        System.out.println(ActivityItemType.CURRENCY.name());
+        Calendar calendar = Calendar.getInstance();
+        Integer w = calendar.get(Calendar.DAY_OF_WEEK);
+
+        System.out.println(w);
     }
 
 }
