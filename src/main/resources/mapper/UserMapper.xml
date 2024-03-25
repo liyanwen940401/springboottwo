@@ -36,6 +36,13 @@
         </trim> where id=#{id}
     </update>
 
+
+    <update id="updateCount">
+        update t_user
+        set age=age+1
+        where id=#{id}
+    </update>
+
     <select id="queryUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select <include refid="Base_Column_List" />
         from t_user where id = #{id}

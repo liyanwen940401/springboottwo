@@ -22,8 +22,7 @@ public class ExportLogTest {
             if (file.isFile() && file.exists()) { // 判断文件是否存在
                 InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);// 考虑到编码格式
                 BufferedReader bufferedReader = new BufferedReader(read);
-                BufferedWriter bw = new BufferedWriter(new FileWriter(dstPath));
-                ;
+                BufferedWriter bw = new BufferedWriter(new FileWriter(dstPath));;
                 String lineTxt = null;
                 while ((lineTxt = bufferedReader.readLine()) != null) {
                     if (lineTxt.contains("doSaveReportConsumeLog Exception")) {

@@ -10,6 +10,7 @@ public interface UserDao {
     int addUser(User user);
     int daleteUserById(Long id);
     int updateUserById(User user);
+    int updateCount(Long id);
     User queryUserById(Long id);
     List<User> queryUserList();
 }

@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updateCount(Long id) {
+        return userDao.updateCount(id);
+    }
+
+    @Override
     public User queryUserById(Long id) {
         return userDao.queryUserById(id);
     }
